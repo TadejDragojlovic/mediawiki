@@ -4,7 +4,7 @@ LDLIBS=-lmysqlcppconn -lstdc++
 LDFLAGS=-L/usr/lib
 
 SRCFILES = $(wildcard src/*.cpp)
-OBJS = main.o
+OBJS = main.o dbconnector.o
 
 all: clean build main
 

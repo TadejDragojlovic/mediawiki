@@ -1,6 +1,8 @@
 #include <iostream>
+#include "../include/dbconnector.h"
 
 int main() {
-  std::cout << "Hello world!\n";
+  DBConnector dbc("localhost", "root", "", "testdb");
+
   return 0;
 }

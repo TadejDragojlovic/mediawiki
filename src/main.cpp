@@ -13,13 +13,24 @@ int main() {
   });
 
   CROW_ROUTE(app, "/add").methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST)
-  ([](const crow::request& req) {
+  ([&dbc](const crow::request& req) {
     if(req.method == crow::HTTPMethod::GET) {
       auto page = crow::mustache::load_text("add_book.html");
       return page;
     } else if(req.method == crow::HTTPMethod::POST) {
-      crow::json::wvalue form_req;
 
+      Book b(
+        req.get_body_params().get("isbn"),
+        req.get_body_params().get("title"),
+        "none",
+        "none"
+      );
+
+      // TODO: add response from `add_book()`
+      Book::add_book(&dbc, b);
+
+      // placeholder response
+      crow::json::wvalue form_req;
       form_req["isbn"] = req.get_body_params().get("isbn");
       form_req["title"] = req.get_body_params().get("title");
 

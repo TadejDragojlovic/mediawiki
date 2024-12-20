@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <vector>
+#include <variant>
+
+#include "dbconnector.h"
 
 using std::string, std::vector;
 
@@ -20,12 +23,20 @@ class Book {
     // TODO: da li treba da napravim i entitet za izdavaca?
     // string m_publisher;
 
-
   public:
     Book(string isbn, string title, string author, string collection);
     // ~Book();
 
+    // getters & setters
+    string get_isbn();
+    string get_title();
+
+    void set_isbn(std::string isbn);
+    void set_title(std::string title);
+
+
     void p();
+    static void add_book(DBConnector* dbc, Book b);
 };
 
 #endif

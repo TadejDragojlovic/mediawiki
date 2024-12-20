@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "../include/dbconnector.h"
+#include "../include/book.h"
 #include "crow.h"
 
 int main() {
@@ -9,6 +10,23 @@ int main() {
 
   CROW_ROUTE(app, "/")([](){
     return "Hello world";
+  });
+
+  CROW_ROUTE(app, "/add").methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST)
+  ([](const crow::request& req) {
+    if(req.method == crow::HTTPMethod::GET) {
+      auto page = crow::mustache::load_text("add_book.html");
+      return page;
+    } else if(req.method == crow::HTTPMethod::POST) {
+      crow::json::wvalue form_req;
+
+      form_req["isbn"] = req.get_body_params().get("isbn");
+      form_req["title"] = req.get_body_params().get("title");
+
+      return form_req.dump();
+    }
+
+    return std::string("Error.");
   });
 
   app.port(5000).run();
